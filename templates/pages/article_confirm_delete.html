@@ -1,0 +1,7 @@
+<form action="" method="post">
+    {% csrf_token %}
+
+    <p>Вы действительно хотите удалить статью с названием: {{ article.title }}</p>
+    <button class="btn btn-danger">Да, удалить</button>
+
+</form>

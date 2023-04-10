@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ username|title }}
+{% endblock title %}
+
+{% block content %}
+<div class="mb-5">
+    <h3 class="text-center">Об авторе</h3>
+    <div class="d-flex gap-3">
+        <div class="col-3">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    Username: <b>{{ user.username }}</b>
+                </li>
+                <li class="list-group-item">
+                    Email: <b>{{ user.email }}</b>
+                </li>
+                <li class="list-group-item">
+                    Joined: <b>{{ user.date_joined.date }}</b>
+                </li>
+            </ul>
+        </div>
+        <div class="col-9">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    Общее кол-во просмотров статей: <b>{{ total_views }}</b>
+                </li>
+                <li class="list-group-item">
+                    Общее кол-во комментариев: <b>{{ total_comments }}</b>
+                </li>
+                <li class="list-group-item">
+                    Общее кол-во статей: <b>{{ total_posts }}</b>
+                </li>
+                <li class="list-group-item">
+                    Кол-во дней с момента регистрации: <b>{{ registered_time }}</b>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    {% for article in articles %}
+    <div class="col-4 mb-3">
+        <div class="card">
+            {% if article.image %}
+            <img src="{{ article.image.url }}" class="card-img-top object-fit-contain" alt="..." height="200">
+            {% else %}
+            <img src="" class="cart-img-top" alt="">
+            {% endif %}
+
+            <div class="card-body">
+                <h5 class="card-title">{{ article.title }}</h5>
+                <p class="card-text">{{ article.description|truncatechars:150 }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    Создано в: <b>{{ article.created_at.time }}</b>
+                </li>
+                <li class="list-group-item">
+                    Обновлено в: <b>{{ article.updated_at.time }}</b>
+                </li>
+                <li class="list-group-item">
+                    Автор: <b>{{ article.author }}</b>
+                </li>
+                <li class="list-group-item">
+                    Категория: <b>{{ article.category }}</b>
+                </li>
+                <li class="list-group-item">
+                    Кол-во просмотров: <b>{{ article.views }}</b>
+                </li>
+            </ul>
+            <div class="card-body">
+                <a href="{{ article.get_absolute_url }}" class="card-link btn btn-info">Подробнее</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}
